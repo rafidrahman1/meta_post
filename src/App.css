@@ -187,3 +187,30 @@
   font-size: 12px;
   padding: 0;
 }
+
+.instagram-button {
+  background-color: #E1306C;
+  color: white;
+}
+
+.instagram-button:hover:not(:disabled) {
+  background-color: #C13584;
+}
+
+.post-options {
+  margin: 15px 0;
+  display: flex;
+  gap: 20px;
+}
+
+.post-options label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.post-options input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+}

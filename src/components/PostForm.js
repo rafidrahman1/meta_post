@@ -7,13 +7,12 @@ export function PostForm({
   onSubmit,
   onChange,
   onImageSelect,
-  onCancel
+  onCancel,
+  postTo,
+  onPostToChange,
+  showInstagramOption
 }) {
     const fileInputRef = useRef(null);
-
-    const handleImageClick = () => {
-        fileInputRef.current.click();
-    };
 
     return (
         <form className="post-form" onSubmit={onSubmit}>
@@ -36,7 +35,7 @@ export function PostForm({
                 <button
                     type="button"
                     className="image-upload-button"
-                    onClick={handleImageClick}
+          onClick={() => fileInputRef.current.click()}
                     disabled={isPosting}
                 >
           Add Image
@@ -61,23 +60,47 @@ export function PostForm({
                 )}
             </div>
 
-            <div className="post-form-buttons">
-                <button
-                    type="submit"
-                    className="beautiful-button submit-button"
+      <div className="post-options">
+        <label>
+          <input
+            type="checkbox"
+            checked={postTo.facebook}
+            onChange={(e) => onPostToChange('facebook', e.target.checked)}
                     disabled={isPosting}
-                >
-                    {isPosting ? 'Posting...' : 'Post'}
-                </button>
-                <button
-                    type="button"
-                    className="beautiful-button cancel-button"
-                    onClick={onCancel}
-                    disabled={isPosting}
-                >
-                    Cancel
-                </button>
+          />
+          Post to Facebook
+        </label>
+
+        {showInstagramOption && (
+          <label>
+            <input
+              type="checkbox"
+              checked={postTo.instagram}
+              onChange={(e) => onPostToChange('instagram', e.target.checked)}
+              disabled={isPosting || !selectedImage}
+            />
+            Post to Instagram
+          </label>
+        )}
             </div>
-        </form>
+
+      <div className="post-form-buttons">
+        <button
+          type="submit"
+          className="beautiful-button submit-button"
+          disabled={isPosting || (!postTo.facebook && !postTo.instagram)}
+        >
+          {isPosting ? 'Posting...' : 'Post'}
+        </button>
+        <button
+          type="button"
+          className="beautiful-button cancel-button"
+          onClick={onCancel}
+          disabled={isPosting}
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
     );
 }
