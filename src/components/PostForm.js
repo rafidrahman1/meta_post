@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 
 export function PostForm({
   content,
@@ -13,6 +13,14 @@ export function PostForm({
   showInstagramOption
 }) {
     const fileInputRef = useRef(null);
+
+    // Effect to handle Instagram requirements
+    useEffect(() => {
+        // If Instagram is selected but there's no image, unselect Instagram
+        if (postTo.instagram && !selectedImage) {
+            onPostToChange('instagram', false);
+        }
+    }, [selectedImage, postTo.instagram, onPostToChange]);
 
     return (
         <form className="post-form" onSubmit={onSubmit}>
@@ -72,23 +80,23 @@ export function PostForm({
         </label>
 
         {showInstagramOption && (
-          <label>
+                    <label className={!selectedImage ? "disabled-option" : ""}>
             <input
               type="checkbox"
               checked={postTo.instagram}
               onChange={(e) => onPostToChange('instagram', e.target.checked)}
               disabled={isPosting || !selectedImage}
             />
-            Post to Instagram
-          </label>
-        )}
+                        Post to Instagram {!selectedImage && <span className="requirement-note">(requires image)</span>}
+                    </label>
+                )}
             </div>
 
       <div className="post-form-buttons">
         <button
           type="submit"
           className="beautiful-button submit-button"
-          disabled={isPosting || (!postTo.facebook && !postTo.instagram)}
+                    disabled={isPosting || (!postTo.facebook && !postTo.instagram) || (postTo.instagram && !selectedImage)}
         >
           {isPosting ? 'Posting...' : 'Post'}
         </button>

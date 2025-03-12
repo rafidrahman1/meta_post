@@ -214,3 +214,15 @@
   width: 16px;
   height: 16px;
 }
+
+.disabled-option {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.requirement-note {
+  font-size: 0.8em;
+  color: #666;
+  margin-left: 5px;
+  font-style: italic;
+}
